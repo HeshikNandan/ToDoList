@@ -8,7 +8,8 @@ public class ToDoList {
 private HashMap<String, Task> tasks = new HashMap<String, Task>();
 
 	public void addTask (Task task) {
-		tasks.put(task.getDescription(), task);
+		if (!task.getDescription().isEmpty())
+			tasks.put(task.getDescription(), task);
 	}
 	public void completeTask(String description) {
 		tasks.get(description).setComplete(true);
