@@ -47,6 +47,10 @@ public class ToDoListTest extends TestCase{
 		assertEquals(3, toDoList.getAllTasks().size());
 	}
 	@Test
+	public void testDuplicateTask() {
+		assertFalse(toDoList.validateTask(task1));
+		}
+	@Test
 	public void testGetStatus() {
 		assertTrue(toDoList.getStatus(task2.getDescription()) == true);
 	}
