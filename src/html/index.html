@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>SPRINT!</title>
+</head>
+
+<body>
+    <div class="container" style="margin-top: 30px;">
+        <div class="row">
+            <h3>Add Task</h3>
+        </div>
+        <div class="row">
+            <form>
+                <div class="form-group">
+                    <label for="inputDescription">Description</label>
+                    <input type="text" class="form-control" id="inputDescription" aria-describedby="descriptionHelp"
+                        placeholder="Enter description">
+                    <small id="descriptionHelp" class="form-text text-muted">Write your task description</small>
+                </div>
+                <div class="form-group">
+                    <label for="inputImageUrl">Image Url</label>
+                    <input type="text" class="form-control" id="inputImageUrl" placeholder="Enter image url">
+                </div>
+                <button type="button" class="btn btn-dark">Add</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 30px;">
+        <div class="row">
+            <h3>Task List</h3>
+        </div>
+        <div class="row">
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Init call the api to load list
+        });
+
+        var addTask = function () {
+            var description = $('#inputDescription').val();
+            var imageUrl = $('#inputImageUrl').val();
+            // Call Add Api
+        }
+    </script>
+</body>
+
+</html>
