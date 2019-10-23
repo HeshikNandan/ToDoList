@@ -2,6 +2,7 @@ package toDoList;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.stream.Collectors;
 
 public class ToDoList {
@@ -25,6 +26,19 @@ private HashMap<String, Task> tasks = new HashMap<String, Task>();
 		return tasks.remove(description);
 		//return null;
 	}
+	//== chek duplicate
+	public boolean validateTask(Task task) {
+		if ( tasks.get(task.getDescription()) != null )
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+     // flag to store result 
+  
+	  	}
 	public Collection<Task> getAllTasks() {
 		return tasks.values();
 		//return null;

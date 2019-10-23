@@ -1,5 +1,5 @@
 package test;
-import java.lang.System.Logger;
+//import java.lang.System.Logger;
 import java.util.Collection;
 
 import org.junit.*;
@@ -41,6 +41,10 @@ public class ToDoListTest extends TestCase{
 		assertTrue(toDoList.getTask("Task 1").equals(task1));
 		//Test
 	}
+	@Test
+	public void testDuplicateTask() {
+		assertFalse(toDoList.validateTask(task1));
+		}
 	@Test
 	public void testGetStatus() {
 		assertTrue(toDoList.getStatus(task2.getDescription()) == true);
