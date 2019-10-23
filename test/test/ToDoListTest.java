@@ -1,9 +1,10 @@
+package test;
 import java.util.Collection;
 
 import org.junit.*;
 import org.junit.Test;
 import junit.framework.*;
-
+import toDoList.*;
 
 public class ToDoListTest extends TestCase{
 	// Define Test Fixtures
