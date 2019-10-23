@@ -11,35 +11,73 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>SPRINT!</title>
+    <style>
+        img.task-image {
+            height: 50px;
+            width: 50px;
+        }
+
+        .col-listing {
+            margin-bottom: 10px;
+        }
+
+        .margin-top-30 {
+            margin-top: 30px;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container" style="margin-top: 30px;">
+    <div class="container margin-top-30">
         <div class="row">
-            <h3>Add Task</h3>
-        </div>
-        <div class="row">
-            <form>
-                <div class="form-group">
-                    <label for="inputDescription">Description</label>
-                    <input type="text" class="form-control" id="inputDescription" aria-describedby="descriptionHelp"
-                        placeholder="Enter description">
-                    <small id="descriptionHelp" class="form-text text-muted">Write your task description</small>
-                </div>
-                <div class="form-group">
-                    <label for="inputImageUrl">Image Url</label>
-                    <input type="text" class="form-control" id="inputImageUrl" placeholder="Enter image url">
-                </div>
-                <button type="button" class="btn btn-dark">Add</button>
-            </form>
+            <div class="col-6">
+                <h3>Add Task</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="inputDescription">Description</label>
+                        <input type="text" class="form-control" id="inputDescription" aria-describedby="descriptionHelp"
+                            placeholder="Enter description">
+                        <small id="descriptionHelp" class="form-text text-muted">Write your task description</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputImageUrl">Image Url</label>
+                        <input type="text" class="form-control" id="inputImageUrl" placeholder="Enter image url">
+                    </div>
+                    <button type="button" class="btn btn-dark" id="addBtn">Add</button>
+                </form>
+            </div>
+            <div class="col-6">
+                <h3>Update Task</h3>
+                <form>
+                    <div class="form-group">
+                        <label for="editDescription">Description</label>
+                        <input type="text" class="form-control" id="editDescription"
+                            aria-describedby="editDescriptionHelp" placeholder="Enter description">
+                        <small id="editDescriptionHelp" class="form-text text-muted">Write your task description</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="editImageUrl">Image Url</label>
+                        <input type="text" class="form-control" id="editImageUrl" placeholder="Enter image url">
+                    </div>
+                    <button type="button" class="btn btn-dark" id="editBtn">Update</button>
+                </form>
+            </div>
         </div>
     </div>
 
-    <div class="container" style="margin-top: 30px;">
+    <div class="container margin-top-30">
         <div class="row">
             <h3>Task List</h3>
         </div>
         <div class="row">
+            <div class="col-12 col-listing">
+                Task 1
+                <img class="task-image img-fluid"
+                    src="https://images.squarespace-cdn.com/content/v1/546d51bae4b0e9f42bb95cbe/1558369134148-NOFEZQO4CYBMTSWLUB5E/ke17ZwdGBToddI8pDm48kNBhxsR5AixTPaSt36FQjZRZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PIHEpb-MmdDNvFVgjmeoENIlexef176In2EgYPtI8R2-8KMshLAGzx4R3EDFOm1kBS/Poppy1.jpg"
+                    alt="dog">
+                <button type="button" class="btn btn-dark" id="editRequestBtn">Edit</button>
+                <button type="button" class="btn btn-dark" id="deleteBtn">Delete</button>
+            </div>
 
         </div>
     </div>
@@ -51,6 +89,27 @@
     <script>
         $(document).ready(function () {
             // Init call the api to load list
+
+            // Button Listen
+            $('#addBtn').click(function (e) {
+                e.preventDefault();
+                console.log('Add');
+            });
+
+            $('#editBtn').click(function (e) {
+                e.preventDefault();
+                console.log('Edit');
+            });
+
+            $('#editRequestBtn').click(function (e) {
+                e.preventDefault();
+                console.log('Edit Request');
+            });
+
+            $('#deleteBtn').click(function (e) {
+                e.preventDefault();
+                console.log('Delete');
+            });
         });
 
         var addTask = function () {
