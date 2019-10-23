@@ -24,6 +24,66 @@
         .margin-top-30 {
             margin-top: 30px;
         }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: #2196F3;
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
     </style>
 </head>
 
@@ -59,7 +119,7 @@
                         <label for="editImageUrl">Image Url</label>
                         <input type="text" class="form-control" id="editImageUrl" placeholder="Enter image url">
                     </div>
-                    <button type="button" class="btn btn-dark" id="editBtn">Update</button>
+                    <button type="button" class="btn btn-dark" id="editBtn" currentItem="">Update</button>
                 </form>
             </div>
         </div>
@@ -69,16 +129,7 @@
         <div class="row">
             <h3>Task List</h3>
         </div>
-        <div class="row">
-            <div class="col-12 col-listing">
-                Task 1
-                <img class="task-image img-fluid"
-                    src="https://images.squarespace-cdn.com/content/v1/546d51bae4b0e9f42bb95cbe/1558369134148-NOFEZQO4CYBMTSWLUB5E/ke17ZwdGBToddI8pDm48kNBhxsR5AixTPaSt36FQjZRZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PIHEpb-MmdDNvFVgjmeoENIlexef176In2EgYPtI8R2-8KMshLAGzx4R3EDFOm1kBS/Poppy1.jpg"
-                    alt="dog">
-                <button type="button" class="btn btn-dark" id="editRequestBtn">Edit</button>
-                <button type="button" class="btn btn-dark" id="deleteBtn">Delete</button>
-            </div>
-
+        <div class="row" id="listingRow">
         </div>
     </div>
 
@@ -87,35 +138,153 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script>
+        var taskList = [{
+                id: 1,
+                description: 'Task 1',
+                imageUrl: 'https://images.squarespace-cdn.com/content/v1/546d51bae4b0e9f42bb95cbe/1558369134148-NOFEZQO4CYBMTSWLUB5E/ke17ZwdGBToddI8pDm48kNBhxsR5AixTPaSt36FQjZRZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PIHEpb-MmdDNvFVgjmeoENIlexef176In2EgYPtI8R2-8KMshLAGzx4R3EDFOm1kBS/Poppy1.jpg',
+                isCompleted: true
+            },
+            {
+                id: 2,
+                description: 'Task 2',
+                imageUrl: 'https://images.squarespace-cdn.com/content/v1/546d51bae4b0e9f42bb95cbe/1558369134148-NOFEZQO4CYBMTSWLUB5E/ke17ZwdGBToddI8pDm48kNBhxsR5AixTPaSt36FQjZRZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PIHEpb-MmdDNvFVgjmeoENIlexef176In2EgYPtI8R2-8KMshLAGzx4R3EDFOm1kBS/Poppy1.jpg',
+                isCompleted: false
+            }
+        ];
+
         $(document).ready(function () {
             // Init call the api to load list
+            refreshTask();
 
             // Button Listen
             $('#addBtn').click(function (e) {
                 e.preventDefault();
-                console.log('Add');
+                addTask();
             });
 
             $('#editBtn').click(function (e) {
                 e.preventDefault();
-                console.log('Edit');
-            });
-
-            $('#editRequestBtn').click(function (e) {
-                e.preventDefault();
-                console.log('Edit Request');
-            });
-
-            $('#deleteBtn').click(function (e) {
-                e.preventDefault();
-                console.log('Delete');
+                var task = {
+                    id: $('#editBtn').attr('currentItem'),
+                    description: $('#editDescription').val(),
+                    imageUrl: $('#editImageUrl').val()
+                };
+                updateTask(task);
             });
         });
 
+        // Add Task
         var addTask = function () {
             var description = $('#inputDescription').val();
             var imageUrl = $('#inputImageUrl').val();
             // Call Add Api
+            var id = taskList[taskList.length - 1].id + 1;
+            taskList.push({
+                id: id,
+                description: description,
+                imageUrl: imageUrl,
+                isCompleted: false
+            });
+            refreshTask();
+        }
+
+        // Refresh Task
+        var refreshTask = function () {
+            // Call List Api
+            $('#inputDescription').val('');
+            $('#inputImageUrl').val('');
+            $('#editDescription').val('');
+            $('#editImageUrl').val('');
+            buildListUi(taskList);
+        }
+
+        var buildListUi = function (taskList) {
+            $('#listingRow').empty()
+            for (var i = 0; i < taskList.length; i++) {
+                var task = taskList[i];
+                if (task.isCompleted) {
+                    var ui =
+                        `<div class="col-12 col-listing" id="${task.id}">` +
+                        `${task.description}&nbsp;&nbsp;&nbsp;` +
+                        `<img class="task-image img-fluid" src="${task.imageUrl}"/>&nbsp;&nbsp;&nbsp;` +
+                        `<label class="switch"><input type="checkbox" checked onclick="completeBtn(${task.id})"><span class="slider round"></span></label> &nbsp;&nbsp;&nbsp;` +
+                        `<button type="button" class="btn btn-dark" onclick="editRequestBtn(${task.id})">Edit</button>&nbsp;&nbsp;&nbsp;` +
+                        `<button type="button" class="btn btn-dark" onclick="deleteBtn(${task.id})">Delete</button>&nbsp;&nbsp;&nbsp;` +
+                        `</div>`;
+                } else {
+                    var ui =
+                        `<div class="col-12 col-listing" id="${task.id}">` +
+                        `${task.description}&nbsp;&nbsp;&nbsp;` +
+                        `<img class="task-image img-fluid" src="${task.imageUrl}"/>&nbsp;&nbsp;&nbsp;` +
+                        `<label class="switch"><input type="checkbox" onclick="completeBtn(${task.id})"><span class="slider round"></span></label> &nbsp;&nbsp;&nbsp;` +
+                        `<button type="button" class="btn btn-dark" onclick="editRequestBtn(${task.id})">Edit</button>&nbsp;&nbsp;&nbsp;` +
+                        `<button type="button" class="btn btn-dark" onclick="deleteBtn(${task.id})">Delete</button>&nbsp;&nbsp;&nbsp;` +
+                        `</div>`;
+                }
+                $('#listingRow').append(ui);
+            }
+        }
+
+        // Delete Task
+        var deleteTask = function (id) {
+            // Call delete Api
+            var newList = []
+            for (var i = 0; i < taskList.length; i++) {
+                if (taskList[i].id !== id) {
+                    newList.push(taskList[i]);
+                }
+            }
+            taskList = newList;
+            refreshTask();
+        }
+
+        // Update Task
+        var updateTask = function (task) {
+            // Call update api
+            var newList = [];
+            for (var i = 0; i < taskList.length; i++) {
+                if (taskList[i].id === parseInt(task.id)) {
+                    taskList[i].description = task.description;
+                    taskList[i].imageUrl = task.imageUrl;
+                }
+                newList.push(taskList[i]);
+            }
+            taskList = newList;
+            $("#editBtn").removeAttr("currentItem");
+            refreshTask();
+        }
+
+        // Buttons Actions
+        var completeBtn = function (id) {
+            var newList = [];
+            for (var i = 0; i < taskList.length; i++) {
+                if (taskList[i].id === parseInt(id)) {
+                    taskList[i].isCompleted = !taskList[i].isCompleted;
+                }
+                newList.push(taskList[i]);
+            }
+            taskList = newList;
+            refreshTask();
+        }
+
+        var editRequestBtn = function (id) {
+            var currentTask = {};
+            for (var i = 0; i < taskList.length; i++) {
+                if (taskList[i].id === id) {
+                    currentTask = taskList[i];
+                    break;
+                }
+            }
+            if (currentTask !== {}) {
+                $('#editDescription').val(currentTask.description);
+                $('#editImageUrl').val(currentTask.imageUrl);
+                $("#editBtn").attr("currentItem", currentTask.id);
+            }
+        }
+
+        var deleteBtn = function (id) {
+            console.log('Delete ' + id);
+            deleteTask(id);
         }
     </script>
 </body>
