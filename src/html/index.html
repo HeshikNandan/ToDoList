@@ -167,7 +167,7 @@
                 var task = {
                     id: $('#editBtn').attr('currentItem'),
                     description: $('#editDescription').val(),
-                    imageUrl: $('#editImageUrl').val()
+                    imageUrl: validateImage($('#editImageUrl').val())
                 };
                 updateTask(task);
             });
@@ -176,7 +176,7 @@
         // Add Task
         var addTask = function () {
             var description = $('#inputDescription').val();
-            var imageUrl = $('#inputImageUrl').val();
+            var imageUrl = validateImage($('#inputImageUrl').val());
             // Call Add Api
             var id = taskList[taskList.length - 1].id + 1;
             taskList.push({
@@ -285,6 +285,13 @@
         var deleteBtn = function (id) {
             console.log('Delete ' + id);
             deleteTask(id);
+        }
+
+        var validateImage = function (imageUrl) {
+            var result = (/\.(gif|jpg|jpeg)$/i).test(imageUrl);
+            if (!result) {
+                throw alert("INVALID IMAGE");
+            }
         }
     </script>
 </body>
