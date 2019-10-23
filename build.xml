@@ -73,36 +73,27 @@
         <antcall target="build"/>
     </target>
               	<target name="ToDoTest">
-              	        <mkdir dir="${junit.output.dir}"/>
-              	        <junit fork="yes" printsummary="withOutAndErr">
-              	            <formatter type="xml"/>
-              	            <test name="test.MyStringStackTest" todir="${junit.output.dir}"/>
-              	            <classpath refid="StackAnnotationProject.classpath"/>
-              	        </junit>
-              	    </target>
-              	    <target name="AllTests">
-              	        <mkdir dir="${junit.output.dir}"/>
-              	        <junit fork="yes" printsummary="withOutAndErr">
-              	            <formatter type="xml"/>
-              	            <test name="test.AllTests" todir="${junit.output.dir}"/>
-              	            <classpath refid="StackAnnotationProject.classpath"/>
-              	        </junit>
-              	    </target>
-              	    <target name="ToDoListProject">
-              	        <mkdir dir="${junit.output.dir}"/>
-              	        <junit fork="yes" printsummary="withOutAndErr">
-              	            <formatter type="xml"/>
-              	            <test name="test.AllTests" todir="${junit.output.dir}"/>
-              	            <test name="test.MyStringStackTest" todir="${junit.output.dir}"/>
-              	            <classpath refid="StackAnnotationProject.classpath"/>
-              	        </junit>
-              	    </target>
-              	    <target name="junitreport">
-              	        <junitreport todir="${junit.output.dir}">
-              	            <fileset dir="${junit.output.dir}">
-              	                <include name="TEST-*.xml"/>
-              	            </fileset>
-              	            <report format="frames" todir="${junit.output.dir}"/>
-              	        </junitreport>
-              	    </target>
+              	                        <mkdir dir="${junit.output.dir}"/>
+              	                        <junit fork="yes" printsummary="withOutAndErr">
+              	                            <formatter type="xml"/>
+              	                            <test name="test.ToDoListTest" todir="${junit.output.dir}"/>
+              	                            <classpath refid="ToDoList.classpath"/>
+              	                        </junit>
+              	                    </target>
+              	                    <target name="ToDoListProject">
+              	                        <mkdir dir="${junit.output.dir}"/>
+              	                        <junit fork="yes" printsummary="withOutAndErr">
+              	                            <formatter type="xml"/>
+              	                            <test name="test.ToDoListTest" todir="${junit.output.dir}"/>
+              	                            <classpath refid="ToDoList.classpath"/>
+              	                        </junit>
+              	                    </target>
+              	                    <target name="junitreport">
+              	                        <junitreport todir="${junit.output.dir}">
+              	                            <fileset dir="${junit.output.dir}">
+              	                                <include name="TEST-*.xml"/>
+              	                            </fileset>
+              	                            <report format="frames" todir="${junit.output.dir}"/>
+              	                        </junitreport>
+              	                    </target>
 </project>
